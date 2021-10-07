@@ -1,2 +1,2 @@
 # DjangoApp
-my dirst DjangoApp following this tutorial https://realpython.com/get-started-with-django-1/
+my first DjangoApp following this tutorial https://realpython.com/get-started-with-django-1/
