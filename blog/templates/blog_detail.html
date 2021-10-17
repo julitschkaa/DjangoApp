@@ -11,7 +11,7 @@
         </a>&nbsp;
         {% endfor %}
     </small>
-    <p><pre>{{ post.body | safe | linebreaks }}</pre></p>
+    <p><pre>{{ post.body | linebreaks }}</pre></p>
     <h3>Leave a comment:</h3>
     <form action="/blog/{{ post.pk }}/" method="post">
         {% csrf_token %}
@@ -30,6 +30,10 @@
         <b>{{ comment.author }}</b> wrote:
     </p>
     <p>{{ comment.body }}</p>
+    <form action="/blog/comments/{{ comment.pk }}/delete/" method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-primary">delete</button>
+    </form>
     <hr>
     {% endfor %}
 </div>

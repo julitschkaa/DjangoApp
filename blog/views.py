@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from blog.models import Post, Comment
 from .forms import CommentForm
 
@@ -26,14 +26,14 @@ def blog_detail(request, pk):
     form = CommentForm()
     if request.method == 'POST':
         form = CommentForm(request.POST)
-        if form.is_valid():
+        if form.is_valid(): #TODO unter zl 36 else einfueg.
             comment = Comment(
                 author=form.cleaned_data["author"],
                 body=form.cleaned_data["body"],
                 post=post
             )
             comment.save()
-
+            return redirect("blog_detail",pk=pk)
     comments = Comment.objects.filter(post=post)
     context = {
         "post": post,
@@ -43,3 +43,9 @@ def blog_detail(request, pk):
 
     return render(request, "blog_detail.html", context)
 
+def comment_delete(request, pk):
+    comment = Comment.objects.get(pk=pk) # comments haben nur einen foreign key? dh ich kann nur alle comments zu einem post loeschen oder gar keins?
+    post = comment.post
+    if request.method == 'POST':
+        comment.delete()
+    return redirect("blog_detail",pk=post.pk)
